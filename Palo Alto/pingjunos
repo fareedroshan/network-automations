@@ -1,0 +1,34 @@
+# Simple example
+  tasks:
+    - name: "Execute ping peer"
+      junos_ping:
+        host={{ 106.1.1.254 }}
+        port={{ 22 }}
+        user={{ root }}
+        passwd={{ cisco123 }}
+        dest_ip=8.8.8.8
+
+# ping over console server connection using PyEZ >= 2.0
+  tasks:
+    - name: "Execute ping peer"
+      junos_ping:
+        host={{ inventory_hostname }}
+        port=2011
+        mode='telnet'
+        user={{ ansible_ssh_user }}
+        passwd={{ ansible_ssh_pass }}
+        dest_ip=8.8.8.8
+
+# Using loop and more parameters
+  tasks:
+    - name: "Execute ping peer"
+      junos_ping:
+        host={{ junos_host }}
+        port={{ netconf_port }}
+        user={{ ansible_ssh_user }}
+        passwd={{ ansible_ssh_pass }}
+        dest_ip={{ item.peer_ip }}
+        source_ip={{ item.local_ip }}
+        do_not_fragment=True
+        ttl=1
+      with_items: "{{underlay.neighbors}}"

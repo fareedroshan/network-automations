@@ -1,0 +1,19 @@
+---
+- name: Get Device Facts
+  hosts: ALL
+  roles:
+    - Juniper.junos
+  connection: local
+  gather_facts: no
+
+    tasks:
+    - name: Load Variables
+      include_vars: vars.yml
+
+    - name: Retrieve facts from device running Junos OS
+      juniper_junos_facts:
+        host: "{{ inventory_hostname }}"
+        savedir: "{{ playbook_dir }}"
+    - name: Print version
+      debug:
+        var: junos.version

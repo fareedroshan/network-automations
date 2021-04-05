@@ -1,0 +1,3 @@
+{% for i in address_entries %}
+set security zones security-zone {{ i.zone }} address-book address {{ i.name }} {{ i.prefix }}
+{% endfor %}

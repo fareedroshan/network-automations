@@ -1,0 +1,16 @@
+curl -k -X GET "https://PUT_YOUR_FIREWALL_IP_HERE/api/?type=keygen&user=api&password=paloalto123" | xmllint --format -
+LUFRPT14MW5xOEo1R09KVlBZNnpnemh0VHRBOWl6TGM9bXcwM3JHUGVhRlNiY0dCR0srNERUQT09
+
+
+curl -k -X GET "https://PUT_YOUR_FIREWALL_IP_HERE/api/?type=keygen&user=api&password=paloalto123" | xmllint --format -
+[root@localhost labs]# curl -k -X GET "https://107.1.1.254/api/?type=keygen&user=admin&password=admin" | xmllint --format -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   144  100   144    0     0    135      0  0:00:01  0:00:01 --:--:--   135
+<?xml version="1.0"?>
+<response status="success">
+  <result>
+    <key>LUFRPT14MW5xOEo1R09KVlBZNnpnemh0VHRBOWl6TGM9bXcwM3JHUGVhRlNiY0dCR0srNERUQT09</key>
+  </result>
+</response>LUFRPT14MW5xOEo1R09KVlBZNnpnemh0VHRBOWl6TGM9bXcwM3JHUGVhRlNiY0dCR0srNERUQT09
+

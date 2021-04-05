@@ -1,0 +1,19 @@
+---
+- hosts: webservers
+  remote_user: root
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  tasks:
+  - name: Install Python Dependencies
+    include_role:
+      name: "geerlingguy.pip"
+  - name: Start up Wordpress image
+    docker_container:
+      name: "{{ app_name }}.cisco.com"
+      image: wordpress
+      state: started
+      ports:
+        - "{{ app_port }}:80"
+        

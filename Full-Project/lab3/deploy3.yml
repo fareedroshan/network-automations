@@ -1,0 +1,84 @@
+---
+- hosts: ipam
+  connection: local
+  gather_facts: False
+  vars:
+    vip_network: "172.16.10.0/24"
+    domain_name: "cisco.com"
+  tasks:
+  - name: Return next available IP for target network
+    set_fact:
+      reserved_ip: "{{ lookup('nios_next_ip', vip_network, provider={'host': inventory_hostname, 'username': ipam_username, 'password': ipam_password})[0] }}"
+  - name: Configure an ipv4 host record
+    nios_host_record:
+      name: "{{ app_name }}.{{ domain_name }}"
+      ipv4:
+        - address: "{{ reserved_ip }}"
+      state: present
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ ipam_username }}"
+        password: "{{ ipam_password }}"       
+- hosts: primary
+  connection: local
+  gather_facts: False
+  collections:
+  - f5networks.f5_modules
+  vars:
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ bigip_username }}"
+      password: "{{ bigip_password }}"
+      validate_certs: False
+  tasks:
+  - name: Create F5 Nodes
+    bigip_node:
+      host: "{{ item }}"
+      name: "{{ item }}"
+      provider: "{{ provider }}"
+    with_items: "{{ groups['webservers'] }}"
+  - name: Create F5 Pool
+    bigip_pool:
+      name: "{{ app_name }}.cisco.com_pool"
+      lb_method: "round-robin"
+      monitor_type: "and_list"
+      monitors:
+        - "/Common/gateway_icmp"
+      provider: "{{ provider }}"
+  - name: Assign Nodes to the Pool
+    bigip_pool_member:
+      pool: "{{ app_name }}.cisco.com_pool"
+      description: "{{ item }}"
+      address: "{{ item }}"
+      port: "{{ app_port }}"
+      provider: "{{ provider }}"
+    with_items: "{{ groups['webservers'] }}"
+  - name: Create F5 Virtual Server
+    bigip_virtual_server:
+      name: "{{ app_name }}.cisco.com_vs"
+      all_profiles:
+        - http
+      destination: "{{ hostvars['192.168.0.191']['reserved_ip'] }}"
+      port: 80
+      pool: "{{ app_name }}.cisco.com_pool"
+      snat: Automap
+      provider: "{{ provider }}"
+- hosts: webservers
+  remote_user: root
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  tasks:
+  - name: Install Python Dependencies
+    include_role:
+      name: "geerlingguy.pip"
+  - name: Start up Wordpress image
+    docker_container:
+      name: "{{ app_name }}.cisco.com"
+      image: wordpress
+      state: started
+      ports:
+        - "{{ app_port }}:80"
+
+#ansible-playbook deplo3.yml -e '{"app_name": "wordpress", "app_port": "8001"}' -i ~/hosts

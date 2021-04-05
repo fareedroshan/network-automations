@@ -1,0 +1,1 @@
+curl -k -X GET "https://PUT_YOUR_FIREWALL_IP_HERE/api/?type=keygen&user=api&password=paloalto123" | xmllint --format -

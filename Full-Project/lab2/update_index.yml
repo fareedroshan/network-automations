@@ -1,0 +1,14 @@
+---
+- hosts: webservers
+  remote_user: root
+  become: true
+  vars:
+    index_location: "/var/www/html/index.html"
+    template: "./index.j2"
+  tasks:
+  - template:
+      src: "{{ template }}"
+      dest: "{{ index_location }}"
+      owner: root
+      group: root
+      mode: 0644

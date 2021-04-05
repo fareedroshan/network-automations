@@ -1,0 +1,19 @@
+---
+- name: Get MAC information
+  hosts: routers,switchs
+  gather_facts: false
+
+
+  tasks:
+    - name: show mac address-table
+      raw: "show mac address-table"
+
+      register: print_output
+
+    -  debug: var=print_output.stdout_lines
+
+
+# Commands to run: 
+#1) ansible-playbook getarp1.yml -u david -k
+#2) Grep for MAC address: ansible-playbook getarp1.yml -u david -k | grep 'ok:\|fe7a'
+#3) Grep for IP address: ansible-playbook getarp1.yml -u david -k | grep 'ok:\|122\.3'

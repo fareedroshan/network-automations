@@ -1,0 +1,20 @@
+- name: Get Palo Alto Networks Firewalls OS version & Uptime
+  hosts: ALL
+  connection:  local
+  gather_facts:  False
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Load Variables
+    include_vars: vars.yml
+    
+  - name: Get the OS version & Uptime from each equipement 
+    panos_facts:
+      provider: '{{provider}}'
+      gather_subset: ['system']
+    register: result
+
+  - debug: 
+      msg: "{{inventory_hostname}} run PANOS {{result.ansible_facts.ansible_net_version}} and has an uptime of {{result.ansible_facts.ansible_net_uptime}}"

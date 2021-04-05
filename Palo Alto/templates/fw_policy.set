@@ -1,0 +1,7 @@
+set security policies from-zone trust to-zone vpn policy Allow_Policy match source-address NetDevOpsVM
+set security policies from-zone trust to-zone vpn policy Allow_Policy match destination-address PrivateNet
+set security policies from-zone trust to-zone vpn policy Allow_Policy match application junos-http
+set security policies from-zone trust to-zone vpn policy Allow_Policy match application junos-ping
+set security policies from-zone trust to-zone vpn policy Allow_Policy match application junos-ssh
+set security policies from-zone trust to-zone vpn policy Allow_Policy match application junos-https
+set security policies from-zone trust to-zone vpn policy Allow_Policy then permit

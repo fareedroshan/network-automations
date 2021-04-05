@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\GitHub\\ansible-bigip"
+		},
+		{
+			"path": "..\\..\\lab1"
+		},
+		{
+			"path": "..\\..\\lab2"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

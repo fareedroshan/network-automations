@@ -1,0 +1,13 @@
+# Filename: get_config.yaml
+
+- name: Demonstration of the get_config Ansible module
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: Execute the get_config RPC
+      netconf_get:
+        display: json
+      register: result
+    - name: Print the configuration as JSON
+      debug:
+        var: result.output

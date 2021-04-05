@@ -1,0 +1,28 @@
+<chassis-inventory>
+  <chassis style="inventory">
+    <name>Chassis</name>
+    <serial-number>195e9fee66fa</serial-number>
+    <description>VSRX</description>
+    <chassis-module>
+      <name>Midplane</name>
+    </chassis-module>
+    <chassis-module>
+      <name>System IO</name>
+    </chassis-module>
+    <chassis-module>
+      <name>Routing Engine</name>
+      <description>VSRX-2CPU-4G memory</description>
+    </chassis-module>
+    <chassis-module>
+      <name>FPC 0</name>
+      <description>FPC</description>
+      <chassis-sub-module>
+        <name>PIC 0</name>
+        <description>VSRX DPDK GE</description>
+      </chassis-sub-module>
+    </chassis-module>
+    <chassis-module>
+      <name>Power Supply 0</name>
+    </chassis-module>
+  </chassis>
+</chassis-inventory>

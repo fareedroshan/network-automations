@@ -1,0 +1,4 @@
+provider:
+  ip_address: "{{ inventory_hostname }}"
+  username: 'root'
+  password: 'cisco123'

@@ -1,0 +1,4 @@
+provider:
+  ip_address: "{{ inventory_hostname }}"
+  username: 'admin'
+  password: 'P@$$worD12#'

@@ -1,0 +1,15 @@
+---
+- hosts: ALL
+  roles:
+  - Juniper.junos
+  connnection: local
+  gather_facts: no
+
+ tasks:
+  - name:  Deploy Ansible user 
+    junos_install_config:
+      host={{inventory+hostname}}
+      user=root
+      file=resource/config-user.set
+      overwrite=false
+      logfile=logs/deploy-user.log

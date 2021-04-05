@@ -1,0 +1,10 @@
+[mysrx]
+192.168.0.175
+
+[mysrx:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_connection=netconf
+ansible_network_os=junos
+ansible_user=cisco
+ansible_password=P@$$worD12#
+

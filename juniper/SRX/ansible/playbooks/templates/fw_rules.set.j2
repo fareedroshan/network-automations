@@ -1,0 +1,6 @@
+{% for i in fw_rules.list %}
+set security policies from-zone {{ i.from_zone }} to-zone {{ i.to_zone }} policy {{ i.policy_name }} match source-address {{ i.source_address }}
+set security policies from-zone {{ i.from_zone }} to-zone {{ i.to_zone }} policy {{ i.policy_name }} match destination-address {{ i.destination_address }}
+set security policies from-zone {{ i.from_zone }} to-zone {{ i.to_zone }} policy {{ i.policy_name }} match application {{ i.application }}
+set security policies from-zone {{ i.from_zone }} to-zone {{ i.to_zone }} policy {{ i.policy_name }} then  {{ i.action }}
+{% endfor %}

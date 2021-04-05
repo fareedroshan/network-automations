@@ -1,0 +1,14 @@
+---
+- name: Create objects only on the active DG member
+  hosts: primary
+  gather_facts: False
+  vars:
+    provider:
+      password: "{{ bigip_password }}"
+      server: "{{ ansible_host }}"
+      user: "{{ bigip_username }}"
+      validate_certs: False
+  tasks:
+  - name: Get failover state
+    shell: tmsh show sys failover | awk '{print $2}'
+    register: failover_state

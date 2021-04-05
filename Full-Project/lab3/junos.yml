@@ -1,0 +1,13 @@
+---
+- hosts: junos
+  gather_facts: no
+
+  tasks:
+
+  - name: Config ge-0/0/2
+    junos_l3_interfaces:
+      config:
+        - name: ge-0/0/2
+          ipv4:
+            - address: 192.168.1.10/24
+      state: merged

@@ -1,0 +1,21 @@
+---
+- hosts: ipam
+  connection: local
+  gather_facts: False
+  vars:
+    vip_network: "172.16.10.0/24"
+    domain_name: "cisco.com"
+  tasks:
+  - name: Return next available IP for target network
+    set_fact:
+      reserved_ip: "{{ lookup('nios_next_ip', vip_network, provider={'host': inventory_hostname, 'username': ipam_username, 'password': ipam_password})[0] }}"
+  - name: Configure an ipv4 host record
+    nios_host_record:
+      name: "{{ app_name }}.{{ domain_name }}"
+      ipv4:
+        - address: "{{ reserved_ip }}"
+      state: present
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ ipam_username }}"
+        password: "{{ ipam_password }}"

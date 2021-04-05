@@ -1,0 +1,70 @@
+provider:
+  ip_address: '{{ inventory_hostname }}'
+  username: PUT_YOUR_USERNAME_HERE
+  password: PUT_YOUR_PASSWORD_HERE
+
+##################
+# INTERFACE      #
+##################
+
+interfaces:
+  - name: ethernet1/1
+    ip: 192.168.10.254/24
+    zone: trust
+    mode: layer3
+  - name: ethernet1/2
+    ip: 192.168.20.254/24
+    zone: dmz
+    mode: layer3
+  - name: ethernet1/3
+    ip: 192.168.30.254/24
+    zone: untrust
+    mode: layer3
+  - name: ethernet1/4
+    ip: 192.168.40.254/24
+    zone: wifi
+    mode: layer3
+
+
+
+##################
+# EXTRA LAB ONLY #
+##################
+
+address_object:
+  - name: network_10
+    value: 192.168.10.0/24
+  - name: network_11
+    value: 192.168.11.0/24
+  - name: network_12
+    value: 192.168.12.0/24
+  - name: network_13
+    value: 192.168.13.0/24
+  - name: network_14
+    value: 192.168.14.0/24
+  - name: network_15
+    value: 192.168.15.0/24
+  - name: network_16
+    value: 192.168.16.0/24
+  - name: network_17
+    value: 192.168.17.0/24
+  - name: network_18
+    value: 192.168.18.0/24
+  - name: network_19
+    value: 192.168.19.0/24
+  - name: network_20
+    value: 192.168.20.0/24
+  - name: network_21
+    value: 192.168.21.0/24
+  - name: network_22
+    value: 192.168.22.0/24
+  - name: network_23
+    value: 192.168.23.0/24
+  - name: network_24
+    value: 192.168.24.0/24
+  - name: network_25
+    value: 192.168.25.0/24
+  - name: network_26
+    value: 192.168.26.0/24
+  - name: network_27
+    value: 192.168.27.0/24

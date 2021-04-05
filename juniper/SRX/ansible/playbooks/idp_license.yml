@@ -1,0 +1,16 @@
+---
+- name: Install IDP Licenses
+  hosts: mysrx
+  connection: local
+  gather_facts: no
+  vars:
+    junos_user: "root"
+    junos_password: "Juniper"
+    build_dir: "/tmp/"
+
+  tasks:
+      - name: Install appsec Licenses
+        script: ../../tools/licensetool.py  --user {{ junos_user }} --password {{ junos_password }} --host {{ inventory_hostname }} --url http://10.10.0.10/license/appsecure.txt
+
+      - name: Install utm Licenses
+        script: ../../tools/licensetool.py  --user {{ junos_user }} --password {{ junos_password }} --host {{ inventory_hostname }} --url http://10.10.0.10/license/utm.txt

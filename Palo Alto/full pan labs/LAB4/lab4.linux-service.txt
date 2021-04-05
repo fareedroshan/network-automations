@@ -1,0 +1,2 @@
+curl --globoff -k -X GET "https://PUT_YOUR_FIREWALL_IP_HERE/api/?type=config&action=set&xpath=/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/service/entry[@name='PUT_SERVICE_OBJECT_NAME_HERE']&element=<protocol><tcp><port>PUT_SERVICE_PORT_HERE</port></tcp></protocol>&key=PUT_API_KEY_HERE" | xmllint --format -
+

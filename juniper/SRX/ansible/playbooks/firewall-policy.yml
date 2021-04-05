@@ -1,0 +1,60 @@
+
+---
+- name: Configure basic firewall policies
+  hosts: mysrx
+  connection: local
+  gather_facts: no
+  vars:
+    build_dir: "/tmp/"
+    address_entries: 
+    - { 'name' : '7.7.7.12/32','zone' : 'trust',  'prefix' : '7.7.7.12/32' }
+    - { 'name' : '8.8.8.12/32','zone' : 'untrust',  'prefix' : '8.8.8.12/32' }
+  tasks:
+
+    - name: Build address book entries
+      ansible.builtin.template:
+        src: templates/fw_address_book_global.set.j2
+        dest: '{{build_dir}}/fw_address_book_global.set'
+      with_items: address_entries
+
+    - name: Apply address book entries
+      junipernetworks.junos.junos_config:
+        src: '{{ build_dir }}/fw_address_book_global.set'
+
+    - name: Check correctness of commit configuration
+      junipernetworks.junos.junos_config:
+        check_commit: yes
+
+    - name: confirm a previous commit
+      junipernetworks.junos.junos_config:
+        confirm_commit: yes
+
+    - name: Read firewall rules from CSV
+      community.general.read_csv:
+        path: firewall_rules.csv
+      register: fw_rules
+      delegate_to: localhost
+
+    - ansible.builtin.debug:
+        msg: '{{ fw_rules }}'
+
+    - name: Build firewall set file
+      ansible.builtin.template: 
+        src: templates/fw_rules.set.j2
+        dest: '{{ build_dir}}/fw_rules.set'
+      with_items: fw_rules
+
+    - name: configurable backup path
+      junipernetworks.junos.junos_config:
+        src: '{{ build_dir}}/fw_rules.set'
+        backup: yes
+        backup_options:
+          filename: backup3.cfg
+
+    - name: Check correctness of commit configuration
+      junipernetworks.junos.junos_config:
+        check_commit: yes
+
+    - name: confirm a previous commit
+      junipernetworks.junos.junos_config:
+        confirm_commit: yes

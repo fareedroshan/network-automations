@@ -1,0 +1,21 @@
+- name: Create Address Objects on a Palo Alto Networks Firewall
+  hosts: all
+  connection:  local
+  gather_facts:  False
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+
+  - name: Load Variables
+    include_vars: vars.yml
+  
+  - name: Push Address Objects to Firewalls
+    changed_when: false
+    panos_address_object:
+      provider: '{{ provider }}'
+      name: '{{item.name}}'
+      value: '{{item.value}}'
+      commit: no
+    with_items: '{{ address_object }}'

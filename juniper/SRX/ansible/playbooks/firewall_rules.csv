@@ -1,0 +1,6 @@
+policy_name,from_zone,source_address,to_zone,destination_address,application,action
+RULE58,trust,7.7.7.12/32,untrust,8.8.8.12/32,any,permit
+RULE59,trust,7.7.7.12/32,untrust,8.8.8.12/32,any,permit
+RULE60,trust,7.7.7.12/32,untrust,8.8.8.12/32,any,permit
+RULE61,trust,7.7.7.12/32,untrust,8.8.8.12/32,any,permit
+RULE62,trust,7.7.7.12/32,untrust,8.8.8.12/32,any,permit
